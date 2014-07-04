@@ -12,15 +12,15 @@ How to use
 -----------
 
 First import component
-
+```html
     <link rel="import" href="webcomponent/bar-graph.html">
-
+```
 Then use bar graph as custom element like this:
-
+```html
     <bar-graph></bar-graph>
-
+```
 Adding data
-
+```html
     <bar-graph width="400" height="250" color="#4CC1DD">
         <table>
             <thead>
@@ -41,7 +41,7 @@ Adding data
             </tbody>
         </table>
     </bar-graph>
-
+```
 
 Options
 -------
