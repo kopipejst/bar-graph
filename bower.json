@@ -1,0 +1,22 @@
+{
+  "name": "bar-graph",
+  "version": "0.0.1",
+  "homepage": "https://github.com/kopipejst/bar-graph",
+  "authors": [
+    "Ivan Lazarevic <devet.sest@gmail.com>"
+  ],
+  "description": "Bar graph web component.",
+  "main": "webcomponent/bar-graph.html",
+  "keywords": [
+    "web-components",
+    "graph"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
