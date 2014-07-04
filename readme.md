@@ -53,7 +53,7 @@ Options
 
 Demo
 ----
-[http://kopipejst.github.io/bar-graph/demo.html](http://kopipejst.github.io/bar-graph/demo.html)
+[http://kopipejst.github.io/bar-graph/](http://kopipejst.github.io/bar-graph/)
 
 Note
 ----
