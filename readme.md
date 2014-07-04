@@ -51,6 +51,9 @@ Options
 - show-values - if false bar values will not be shown
 - show-titles - if false text below bars will not be shown
 
+Demo
+----
+[http://kopipejst.github.io/bar-graph/demo.html](http://kopipejst.github.io/bar-graph/demo.html)
 
 Note
 ----
