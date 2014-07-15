@@ -8,6 +8,10 @@ What is it ?
 
 It's a web component that will take table data and create bar graph from them. In case that your browser don't support HTML imports users will still see table data.
 
+Install with bower
+------------------
+`bower install bar-graph`
+
 How to use
 -----------
 
