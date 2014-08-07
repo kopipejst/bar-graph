@@ -1,124 +1,182 @@
 <template id="bargraph-template">
     <style>
-    .bar-holder {
-        bottom: 0;
-        position: absolute;
-    }
-    .bar-value, .bar-title {
-        text-align: center;
-        line-height: 20px;
-        text-overflow: ellipsis;
-        overflow: hidden;
-        white-space: nowrap;
-    }
-    .bar:hover {
-        opacity: 0.7;
-    }
-    #holder {
-        position: relative;
-        font-size: 10px;
-        font-family: Helvetica, Arial, sans-serif;
-    }
+        .bar-holder {
+            bottom: 0;
+            position: absolute;
+        }
+
+        .bar-value, .bar-title {
+            text-align: center;
+            line-height: 20px;
+            text-overflow: ellipsis;
+            overflow: hidden;
+            white-space: nowrap;
+        }
+
+        .bar:hover {
+            opacity: 0.7;
+        }
+
+        #holder {
+            position: relative;
+            font-size: 10px;
+            font-family: Helvetica, Arial, sans-serif;
+        }
+
+        #holder figcaption {
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        table {
+            border: 0;
+            border-collapse: collapse;
+            width: 300px;
+            z-index: 10;
+        }
+
+        table caption {
+            font-size: .8em;
+
+        }
+
+        table thead th, table thead td, table caption {
+            font-weight: bold;
+            text-align: left;
+        }
+
+        table td, table th {
+            border: 1px solid #666;
+            font-size: .8em;
+            padding: .3em;
+            text-align: left;
+        }
     </style>
 
-    <div id="holder"></div>
+    <figure id="holder"></figure>
 
 </template>
 
 <script>
-var doc = document.currentScript.ownerDocument,
-    BargraphProto = Object.create(HTMLElement.prototype),
-    template = doc.querySelector("#bargraph-template"),
-    graph = template.content.cloneNode(true);
+    var doc = document.currentScript.ownerDocument,
+        BargraphProto = Object.create(HTMLElement.prototype),
+        template = doc.querySelector("#bargraph-template"),
+        graph = template.content.cloneNode(true);
 
-BargraphProto.createdCallback = function() {
+    function makeid(len) {
+        var text = "";
+        var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
 
-    var options = {};
+        for (var i = 0; i < len; i++)
+            text += possible.charAt(Math.floor(Math.random() * possible.length));
 
-    options.width = this.getAttribute('width') ? this.getAttribute('width') : 400;
-    options.height = this.getAttribute('height') ? this.getAttribute('height') : 250;
-    options.color = this.getAttribute('color') ? this.getAttribute('color') : '#0099ff';
-    options.showValues = this.getAttribute('show-values') === "false" ? false : true;
-    options.showTitles = this.getAttribute('show-titles') === "false" ? false : true;
+        return text;
+    }
 
+    BargraphProto.createdCallback = function () {
 
-    var shadow = this.shadow = this.createShadowRoot();
-    this.shadow.appendChild(graph);
+        var options = {};
 
-    var table = this.children;
-    var rows = table[0].rows;
+        options.width = this.getAttribute('width') ? this.getAttribute('width') : 400;
+        options.height = this.getAttribute('height') ? this.getAttribute('height') : 250;
+        options.color = this.getAttribute('color') ? this.getAttribute('color') : '#0099ff';
+        options.showValues = this.getAttribute('show-values') === "false" ? false : true;
+        options.showTitles = this.getAttribute('show-titles') === "false" ? false : true;
 
-    var tempData = [];
+        var shadow = this.shadow = this.createShadowRoot();
+        this.shadow.appendChild(graph);
 
-    for (var i = 1; i < rows.length; i++) {
-        for (var j = 0; j < rows[i].cells.length; j++) {
-            tempData.push(rows[i].cells[j].innerHTML)
+        var table = this.children;
+        var origTable = table;
+
+        var rows = table[0].rows;
+
+        var tempData = [];
+
+        for (var i = 1; i < rows.length; i++) {
+            for (var j = 0; j < rows[i].cells.length; j++) {
+                tempData.push(rows[i].cells[j].innerHTML)
+            }
         }
-    }
 
-    var data = [],
-        max = 0;
+        var data = [],
+            max = 0;
 
-    for (var i = 0; i < tempData.length; i += 2) {
-        data.push([tempData[i], Number(tempData[i + 1])]);
-        if (Number(tempData[i + 1]) > Number(max)) {
-            max = tempData[i + 1];
+        for (var i = 0; i < tempData.length; i += 2) {
+            data.push([tempData[i], Number(tempData[i + 1])]);
+            if (Number(tempData[i + 1]) > Number(max)) {
+                max = tempData[i + 1];
+            }
         }
-    }
 
-    var minusHeight = 0;
-    if (options.showValues) {
-        minusHeight += 20;
-    }
-    if (options.showTitles) {
-        minusHeight += 20;
-    }
-
-    var barWidth = options.width / data.length,
-        holder = this.shadow.querySelector('#holder');
-
-    holder.style.height = options.height + 'px';
-    holder.style.width = this.getAttribute('width') + 'px';
-
-    for (i = 0; i < data.length; i++) {
-
-        barHeight = data[i][1] / max * parseInt(options.height - minusHeight);
-
-        var barHolder = document.createElement('div');
-        barHolder.className = 'bar-holder';
-        barHolder.style.left = barWidth * i + 'px';
-        barHolder.style.width = (barWidth - 1) + 'px';
-
-        var bar = document.createElement('div');
-        bar.style.height = barHeight + 'px';
-        bar.className = 'bar';
-        bar.style.backgroundColor = options.color;
-
-
+        var minusHeight = 0;
         if (options.showValues) {
-            var barValue = document.createElement('div');
-            barValue.className = 'bar-value';
-            barValue.innerHTML = data[i][1];
-            barHolder.appendChild(barValue);
+            minusHeight += 20;
         }
-
-        barHolder.appendChild(bar);
-
         if (options.showTitles) {
-            var barTitle = document.createElement('div');
-            barTitle.className = 'bar-title';
-            barTitle.innerHTML = data[i][0];
-            barHolder.appendChild(barTitle);
+            minusHeight += 20;
         }
 
-        holder.appendChild(barHolder);
+        var barWidth = options.width / data.length,
+            holder = this.shadow.querySelector('#holder');
+        tCaption = this.querySelectorAll('table caption');
 
-    }
+        // If the table has a <caption> add it as the figcaption
+        // also give the graph a role of image and
+        // use the figcapture as the label for the "image"
+        if (tCaption) {
+            // fudge an ID for the fig caption
+            var randID = makeid(5);
+
+            figCaption = document.createElement('figcaption');
+            figCaption.innerText = tCaption[0].innerText;
+            figCaption.setAttribute('id', randID);
+            holder.appendChild(figCaption);
+            holder.setAttribute('role', 'image');
+            holder.setAttribute('aria-labelledby', randID);
+        }
+
+        holder.style.height = options.height + 'px';
+        holder.style.width = this.getAttribute('width') + 'px';
 
 
-};
+        for (i = 0; i < data.length; i++) {
 
-var Bargraph = doc.registerElement('bar-graph', {
-    'prototype': BargraphProto
-});
+            barHeight = data[i][1] / max * parseInt(options.height - minusHeight);
+
+            var barHolder = document.createElement('div');
+            barHolder.className = 'bar-holder';
+            barHolder.style.left = barWidth * i + 'px';
+            barHolder.style.width = (barWidth - 1) + 'px';
+
+            var bar = document.createElement('div');
+            bar.style.height = barHeight + 'px';
+            bar.className = 'bar';
+            bar.style.backgroundColor = options.color;
+
+
+            if (options.showValues) {
+                var barValue = document.createElement('div');
+                barValue.className = 'bar-value';
+                barValue.innerHTML = data[i][1];
+                barHolder.appendChild(barValue);
+            }
+
+            barHolder.appendChild(bar);
+
+            if (options.showTitles) {
+                var barTitle = document.createElement('div');
+                barTitle.className = 'bar-title';
+                barTitle.innerHTML = data[i][0];
+                barHolder.appendChild(barTitle);
+            }
+
+            holder.appendChild(barHolder);
+
+        }
+    };
+
+    var Bargraph = doc.registerElement('bar-graph', {
+        'prototype': BargraphProto
+    });
 </script>

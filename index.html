@@ -2,7 +2,8 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, minimal-ui">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, minimal-ui">
     <link rel="import" href="webcomponent/bar-graph.html">
     <title>Bar graph web component.</title>
     <style>
@@ -19,16 +20,45 @@
             color: #0099ff;
             text-decoration: none;
         }
+
         a:hover {
             color: blue;
         }
+
         h1 {
             font-size: 60px;
         }
+
+        h2 {
+            font-size: 30px;
+        }
+
         p {
             font-size: 14px;
         }
 
+        table {
+            border: 0;
+            border-collapse: collapse;
+            width: 300px;
+        }
+
+        table caption {
+            font-size: .8em;
+
+        }
+
+        table thead th, table thead td, table caption {
+            font-weight: bold;
+            text-align: left;
+        }
+
+        table td, table th {
+            border: 1px solid #666;
+            font-size: .8em;
+            padding: .3em;
+            text-align: left;
+        }
     </style>
 </head>
 <body>
@@ -37,79 +67,81 @@
 <div class="page">
 
     <h1>&lt;bar-graph&gt;</h1>
-    Bar graph web component.<br /><br /><br />
 
-
+    <h2>Bar graph web component.</h2>
     <bar-graph>
         <table>
+            <caption>Really awesome table info</caption>
             <thead>
-                <tr>
-                    <th>month</th>
-                    <th>value</th>
-                </tr>
+            <tr>
+                <th scope="col">Month</th>
+                <th scope="col">Value</th>
+            </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>January</td>
-                    <td>120</td>
-                </tr>
-                <tr>
-                    <td>February</td>
-                    <td>146</td>
-                </tr>
-                <tr>
-                    <td>March</td>
-                    <td>96</td>
-                </tr>
-                <tr>
-                    <td>April</td>
-                    <td>53</td>
-                </tr>
-                <tr>
-                    <td>May</td>
-                    <td>11</td>
-                </tr>
-                <tr>
-                    <td>Jun</td>
-                    <td>50.5</td>
-                </tr>
-                <tr>
-                    <td>July</td>
-                    <td>20.9</td>
-                </tr>
-                <tr>
-                    <td>August</td>
-                    <td>46</td>
-                </tr>
-                <tr>
-                    <td>September</td>
-                    <td>55</td>
-                </tr>
-                <tr>
-                    <td>October</td>
-                    <td>109</td>
-                </tr>
-                <tr>
-                    <td>November</td>
-                    <td>129</td>
-                </tr>
-                <tr>
-                    <td>December</td>
-                    <td>189</td>
-                </tr>
+            <tr>
+                <td>January</td>
+                <td>120</td>
+            </tr>
+            <tr>
+                <td>February</td>
+                <td>146</td>
+            </tr>
+            <tr>
+                <td>March</td>
+                <td>96</td>
+            </tr>
+            <tr>
+                <td>April</td>
+                <td>53</td>
+            </tr>
+            <tr>
+                <td>May</td>
+                <td>11</td>
+            </tr>
+            <tr>
+                <td>Jun</td>
+                <td>50.5</td>
+            </tr>
+            <tr>
+                <td>July</td>
+                <td>20.9</td>
+            </tr>
+            <tr>
+                <td>August</td>
+                <td>46</td>
+            </tr>
+            <tr>
+                <td>September</td>
+                <td>55</td>
+            </tr>
+            <tr>
+                <td>October</td>
+                <td>109</td>
+            </tr>
+            <tr>
+                <td>November</td>
+                <td>129</td>
+            </tr>
+            <tr>
+                <td>December</td>
+                <td>189</td>
+            </tr>
             </tbody>
         </table>
     </bar-graph>
-<br /><br />
-
-    <p>check out <a href="https://github.com/kopipejst/bar-graph">source code</a> by <a href="http://workshop.rs">kopipejst</a></p>
 
 
-    <p>* In case that your browser does not support web components you should see data in table. Otherwise, you should see nice blue bar graph.</p>
+    <p>check out <a href="https://github.com/kopipejst/bar-graph">source code</a> by <a href="http://workshop.rs">kopipejst</a>
+    </p>
+
+    <p>* In case that your browser does not support web components you should see data in table. Otherwise, you should
+        see nice blue bar graph.</p>
 
 </div>
-
-<a href="https://github.com/kopipejst/bar-graph"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/38ef81f8aca64bb9a64448d0d70f1308ef5341ab/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png"></a>
-
+<a href="https://github.com/kopipejst/bar-graph"><img style="position: absolute; top: 0; right: 0; border: 0;"
+                                                      src="https://camo.githubusercontent.com/38ef81f8aca64bb9a64448d0d70f1308ef5341ab/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67"
+                                                      alt="Fork me on GitHub"
+                                                      data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png"></a>
 </body>
 </html>
