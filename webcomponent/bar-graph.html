@@ -43,8 +43,6 @@
         template = doc.querySelector("#bargraph-template"),
         graph = template.content.cloneNode(true);
 
-    console.log(template);
-
     function makeid(len) {
         var text = "";
         var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
@@ -83,14 +81,31 @@
         }
 
         var data = [],
-            max = 0;
+            max = 0,
+            min = 1000000000000,
+            points = 0,
+            total = 0,
+            average = 0,
+            summary = '',
+            maxLabel = '',
+            minLabel = '';
 
         for (var i = 0; i < tempData.length; i += 2) {
+            points++;
             data.push([tempData[i], Number(tempData[i + 1])]);
+            total = total + Number(tempData[i + 1]);
             if (Number(tempData[i + 1]) > Number(max)) {
+                maxLabel = tempData[i];
                 max = tempData[i + 1];
             }
+            else if (Number(tempData[i + 1]) < Number(min)) {
+                min = tempData[i + 1];
+                minLabel = tempData[i];
+            }
         }
+
+        average = total / points;
+        summary = points + " data points. Lowest: " + " (" + minLabel + ") " + min + ". Highest: " + " (" + maxLabel + ") " + max + ". Average:  " + average + ".  ";
 
         var minusHeight = 0;
         if (options.showValues) {
@@ -103,8 +118,6 @@
         var barWidth = options.width / data.length,
             holder = this.shadow.querySelector('#holder');
             tCaption = this.querySelectorAll('table caption');
-
-
 
         // If the table has a <caption> add it as the figcaption
         // also give the graph a role of image and
@@ -121,13 +134,12 @@
             holder.setAttribute('aria-labelledby', randID);
         }
 
-        if(options.summarize === true){
 
-        }
         if(options.offscreencontent === true){
             var table = document.querySelectorAll('bar-graph table')[0];
             var offscreen = "position: absolute !important; top: 0; left: 0; clip: rect(1px 1px 1px 1px);";
             table.style.cssText = offscreen;
+            table.setAttribute("summary", summary);
         }
         else{
             var table = document.querySelectorAll('bar-graph table')[0];
