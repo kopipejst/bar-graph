@@ -122,7 +122,7 @@
         // If the table has a <caption> add it as the figcaption
         // also give the graph a role of image and
         // use the figcapture as the label for the "image"
-        if (tCaption) {
+        if (tCaption && tCaption.length > 0) {
             // fudge an ID for the fig caption
             var randID = makeid(5);
 
